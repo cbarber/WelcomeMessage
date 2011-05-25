@@ -1,0 +1,13 @@
+name: WelcomeMessage
+main: me.cr3dossoft.WelcomeMessage.WelcomeMessage
+version: 1.3
+author: cr3dos
+description: >
+             Welcome the Players on your server
+commands:
+  welcome:
+    description: toggle WelcomeMessage
+    usage: /welcome
+  wmset:
+    description: set message fpr group
+    usage: /wmset <groupname> <new Message>
