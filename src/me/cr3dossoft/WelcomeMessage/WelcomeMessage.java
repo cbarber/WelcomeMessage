@@ -2,6 +2,7 @@ package me.cr3dossoft.WelcomeMessage;
 
 import java.util.logging.Logger;
 
+import me.cr3dossoft.WelcomeMessage.API.WelcomeHandler;
 import me.cr3dossoft.WelcomeMessage.Commands.WMCommand;
 import me.cr3dossoft.WelcomeMessage.Commands.WMSetCommand;
 import me.cr3dossoft.WelcomeMessage.Config.WMConfigHandler;
@@ -24,7 +25,8 @@ public class WelcomeMessage extends JavaPlugin
 
 	private PluginDescriptionFile pdfFile;
 	private static final Logger log = Logger.getLogger("Minecraft");
-
+	private WMPlayerListener wmpl;
+	
 	private static PermissionHandler permissionHandler;
 
 	@Override
@@ -43,7 +45,7 @@ public class WelcomeMessage extends JavaPlugin
 	{
 		pdfFile = this.getDescription();
 
-		WMPlayerListener wmpl = new WMPlayerListener();
+		this.wmpl = new WMPlayerListener();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Type.PLAYER_JOIN, wmpl, Priority.High, this);
 
@@ -90,9 +92,7 @@ public class WelcomeMessage extends JavaPlugin
 			}
 			else
 			{
-				log.info("Permission system not detected, defaulting to OP"); // Wir
-																				// benutzen
-																				// isOp()
+				log.info("Permission system not detected, defaulting to OP");
 			}
 		}
 	}
@@ -107,5 +107,15 @@ public class WelcomeMessage extends JavaPlugin
 		{
 			return permissionHandler.has(p, label);
 		}
+	}
+
+	public void addWelcomeHandler(WelcomeHandler handler)
+	{
+		this.wmpl.addHandler(handler);
+	}
+	
+	public void removeWelcomeHandler(WelcomeHandler handler)
+	{
+		this.wmpl.removeHandler(handler);
 	}
 }

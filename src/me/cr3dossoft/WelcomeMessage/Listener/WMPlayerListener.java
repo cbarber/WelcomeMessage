@@ -1,9 +1,11 @@
 package me.cr3dossoft.WelcomeMessage.Listener;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import me.cr3dossoft.WelcomeMessage.WelcomeMessage;
+import me.cr3dossoft.WelcomeMessage.API.WelcomeHandler;
 import me.cr3dossoft.WelcomeMessage.Config.WMConfigHandler;
 import me.cr3dossoft.WelcomeMessage.Config.WMMessage;
 
@@ -16,6 +18,14 @@ import com.nijiko.permissions.PermissionHandler;
 
 public class WMPlayerListener extends PlayerListener
 {
+	
+	private ArrayList<WelcomeHandler> plugins;
+	
+	public WMPlayerListener()
+	{
+		plugins = new ArrayList<WelcomeHandler>();
+	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlayerJoin(PlayerJoinEvent event)
@@ -34,14 +44,24 @@ public class WMPlayerListener extends PlayerListener
 
 		String[] s = WMMessage.getMessage(group);
 
+		sendAMessage(p, s);
+		
+		for(WelcomeHandler wm : plugins)
+		{
+			sendAMessage(p, wm.getMessageForGroup(group));
+			sendAMessage(p, wm.getMessageForPlayer(p));
+		}
+	}
+
+	private void sendAMessage(Player p, String[] s)
+	{
+		if(null == s) return;
 		for (String txt : s)
 		{
-			Player player = event.getPlayer();
-			
-			String out = replacePlayer(txt, player);
-			out = replacePlayers(out, player);
-			out = replacePlayerCount(out, player);
-			out = replaceMaxPlayerCount(out, player);
+			String out = replacePlayer(txt, p);
+			out = replacePlayers(out, p);
+			out = replacePlayerCount(out, p);
+			out = replaceMaxPlayerCount(out, p);
 			
 			Pattern pat = Pattern.compile("\\{[\\w]+\\}");
 			Matcher m = pat.matcher(out);
@@ -93,5 +113,18 @@ public class WMPlayerListener extends PlayerListener
 		Integer maxPlayerCount = p.getServer().getMaxPlayers();
 		
 		return txt.replaceAll("\\{maxPlayerCount\\}", maxPlayerCount.toString());
+	}
+
+	public void addHandler(WelcomeHandler handler)
+	{
+		System.out.println("add Handler");
+		if(null == handler) return;
+		plugins.add(handler);
+	}
+	
+	public void removeHandler(WelcomeHandler handler)
+	{
+		if(null == handler) return;
+		plugins.remove(handler);
 	}
 }
