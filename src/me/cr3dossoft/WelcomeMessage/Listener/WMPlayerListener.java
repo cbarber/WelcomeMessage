@@ -18,26 +18,26 @@ import com.nijiko.permissions.PermissionHandler;
 
 public class WMPlayerListener extends PlayerListener
 {
-	
+
 	private ArrayList<WelcomeHandler> plugins;
-	
+
 	public WMPlayerListener()
 	{
 		plugins = new ArrayList<WelcomeHandler>();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		if (!WMConfigHandler.readBool("welcome")) return;
 		Player p = event.getPlayer();
-		
+
 		PermissionHandler permissionHandler = WelcomeMessage.getPermissionHandler();
-		
+
 		String group = "Default";
-		
-		if(permissionHandler != null)
+
+		if (permissionHandler != null)
 		{
 			group = permissionHandler.getGroup(p.getWorld().getName(), p.getName());
 		}
@@ -45,8 +45,8 @@ public class WMPlayerListener extends PlayerListener
 		String[] s = WMMessage.getMessage(group);
 
 		sendAMessage(p, s);
-		
-		for(WelcomeHandler wm : plugins)
+
+		for (WelcomeHandler wm : plugins)
 		{
 			sendAMessage(p, wm.getMessageForGroup(group));
 			sendAMessage(p, wm.getMessageForPlayer(p));
@@ -55,14 +55,14 @@ public class WMPlayerListener extends PlayerListener
 
 	private void sendAMessage(Player p, String[] s)
 	{
-		if(null == s) return;
+		if (null == s) return;
 		for (String txt : s)
 		{
 			String out = replacePlayer(txt, p);
 			out = replacePlayers(out, p);
 			out = replacePlayerCount(out, p);
 			out = replaceMaxPlayerCount(out, p);
-			
+
 			Pattern pat = Pattern.compile("\\{[\\w]+\\}");
 			Matcher m = pat.matcher(out);
 
@@ -91,40 +91,40 @@ public class WMPlayerListener extends PlayerListener
 
 		for (Player player : ps)
 		{
-			if(players.length() > 0)
+			if (players.length() > 0)
 			{
-				players.append(",");
+				players.append(", ");
 			}
 			players.append(player.getDisplayName());
 		}
 
 		return txt.replaceAll("\\{players\\}", players.toString());
 	}
-	
+
 	private String replacePlayerCount(String txt, Player p)
 	{
 		Integer playerCount = p.getServer().getOnlinePlayers().length;
-		
+
 		return txt.replaceAll("\\{playerCount\\}", playerCount.toString());
 	}
-	
+
 	private String replaceMaxPlayerCount(String txt, Player p)
 	{
 		Integer maxPlayerCount = p.getServer().getMaxPlayers();
-		
+
 		return txt.replaceAll("\\{maxPlayerCount\\}", maxPlayerCount.toString());
 	}
 
 	public void addHandler(WelcomeHandler handler)
 	{
 		System.out.println("add Handler");
-		if(null == handler) return;
+		if (null == handler) return;
 		plugins.add(handler);
 	}
-	
+
 	public void removeHandler(WelcomeHandler handler)
 	{
-		if(null == handler) return;
+		if (null == handler) return;
 		plugins.remove(handler);
 	}
 }
