@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import me.cr3dossoft.WelcomeMessage.API.WelcomeHandler;
 import me.cr3dossoft.WelcomeMessage.Commands.WMCommand;
+import me.cr3dossoft.WelcomeMessage.Commands.WMReload;
 import me.cr3dossoft.WelcomeMessage.Commands.WMSetCommand;
 import me.cr3dossoft.WelcomeMessage.Config.WMConfigHandler;
 import me.cr3dossoft.WelcomeMessage.Listener.WMPlayerListener;
@@ -52,6 +53,7 @@ public class WelcomeMessage extends JavaPlugin
 		WMConfigHandler.onStartUp();
 		getCommand("welcome").setExecutor(new WMCommand());
 		getCommand("wmset").setExecutor(new WMSetCommand());
+		getCommand("wmreload").setExecutor(new WMReload());
 
 		log.info(pdfFile.getName() + " " + pdfFile.getVersion() + " enabled");
 

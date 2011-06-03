@@ -1,6 +1,6 @@
 name: WelcomeMessage
 main: me.cr3dossoft.WelcomeMessage.WelcomeMessage
-version: 1.5
+version: 1.5.1
 author: cr3dos
 description: >
              Welcome the Players on your server
@@ -11,3 +11,6 @@ commands:
   wmset:
     description: set message for group
     usage: /wmset <groupname> <new Message>
+  wmreload:
+    description: reload the config file
+    usage: /wmreload   

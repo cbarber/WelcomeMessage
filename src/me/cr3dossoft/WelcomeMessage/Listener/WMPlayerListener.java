@@ -10,6 +10,7 @@ import me.cr3dossoft.WelcomeMessage.Config.WMConfigHandler;
 import me.cr3dossoft.WelcomeMessage.Config.WMMessage;
 
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
@@ -39,7 +40,8 @@ public class WMPlayerListener extends PlayerListener
 
 		if (permissionHandler != null)
 		{
-			group = permissionHandler.getGroup(p.getWorld().getName(), p.getName());
+			World world = p.getWorld();
+			if(null != world) group = permissionHandler.getGroup(world.getName(), p.getName());
 		}
 
 		String[] s = WMMessage.getMessage(group);
@@ -80,7 +82,7 @@ public class WMPlayerListener extends PlayerListener
 
 	private String replacePlayer(String txt, Player p)
 	{
-		return txt.replaceAll("\\{player\\}", p.getDisplayName());
+		return txt.replaceAll("\\{player\\}", p.getName());
 	}
 
 	private String replacePlayers(String txt, Player p)
@@ -95,7 +97,7 @@ public class WMPlayerListener extends PlayerListener
 			{
 				players.append(", ");
 			}
-			players.append(player.getDisplayName());
+			players.append(player.getName());
 		}
 
 		return txt.replaceAll("\\{players\\}", players.toString());
