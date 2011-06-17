@@ -113,6 +113,7 @@ public class WelcomeMessage extends JavaPlugin
 
 	public void addWelcomeHandler(WelcomeHandler handler)
 	{
+		if(null == handler) return;
 		this.wmpl.addHandler(handler);
 	}
 	

@@ -82,11 +82,17 @@ public class WMPlayerListener extends PlayerListener
 
 	private String replacePlayer(String txt, Player p)
 	{
+		if(null == txt) return null;
+		if(null == p) return txt;
+		
 		return txt.replaceAll("\\{player\\}", p.getName());
 	}
 
 	private String replacePlayers(String txt, Player p)
 	{
+		if(null == txt) return "";
+		if(null == p) return txt;
+		
 		StringBuilder players = new StringBuilder();
 
 		Player[] ps = p.getServer().getOnlinePlayers();
@@ -105,6 +111,9 @@ public class WMPlayerListener extends PlayerListener
 
 	private String replacePlayerCount(String txt, Player p)
 	{
+		if(null == txt) return "";
+		if(null == p) return txt;
+		
 		Integer playerCount = p.getServer().getOnlinePlayers().length;
 
 		return txt.replaceAll("\\{playerCount\\}", playerCount.toString());
@@ -112,6 +121,9 @@ public class WMPlayerListener extends PlayerListener
 
 	private String replaceMaxPlayerCount(String txt, Player p)
 	{
+		if(null == txt) return "";
+		if(null == p) return txt;
+		
 		Integer maxPlayerCount = p.getServer().getMaxPlayers();
 
 		return txt.replaceAll("\\{maxPlayerCount\\}", maxPlayerCount.toString());
