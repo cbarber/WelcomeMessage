@@ -1,6 +1,6 @@
 name: WelcomeMessage
 main: me.cr3dossoft.WelcomeMessage.WelcomeMessage
-version: 1.5.2
+version: 1.5.3
 author: cr3dos
 description: >
              Welcome the Players on your server

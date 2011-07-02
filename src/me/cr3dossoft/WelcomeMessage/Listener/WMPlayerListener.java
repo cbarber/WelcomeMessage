@@ -82,7 +82,7 @@ public class WMPlayerListener extends PlayerListener
 
 	private String replacePlayer(String txt, Player p)
 	{
-		if(null == txt) return null;
+		if(null == txt) return "";
 		if(null == p) return txt;
 		
 		return txt.replaceAll("\\{player\\}", p.getName());
