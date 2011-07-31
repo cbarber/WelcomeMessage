@@ -41,7 +41,7 @@ public class WMPlayerListener extends PlayerListener
 		if (permissionHandler != null)
 		{
 			World world = p.getWorld();
-			if(null != world) group = permissionHandler.getGroup(world.getName(), p.getName());
+			if(null != world) group = permissionHandler.getGroup(world.getName(), p.getDisplayName());
 		}
 
 		String[] s = WMMessage.getMessage(group);
@@ -85,7 +85,7 @@ public class WMPlayerListener extends PlayerListener
 		if(null == txt) return "";
 		if(null == p) return txt;
 		
-		return txt.replaceAll("\\{player\\}", p.getName());
+		return txt.replaceAll("\\{player\\}", p.getDisplayName());
 	}
 
 	private String replacePlayers(String txt, Player p)
@@ -103,7 +103,7 @@ public class WMPlayerListener extends PlayerListener
 			{
 				players.append(", ");
 			}
-			players.append(player.getName());
+			players.append(player.getDisplayName());
 		}
 
 		return txt.replaceAll("\\{players\\}", players.toString());
